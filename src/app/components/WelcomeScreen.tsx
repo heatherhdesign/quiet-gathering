@@ -78,9 +78,10 @@ export function WelcomeScreen({ onEnter, onLearnMore }: WelcomeScreenProps) {
           <motion.button
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.9, ease: "easeOut" }}
+            whileHover={{ opacity: 0.7, scale: 1.02 }}
+            transition={{ duration: 0.3 }}
             onClick={onLearnMore}
-            className="text-[#f7e7ce] transition-all duration-300 hover:opacity-70"
+            className="text-[#f7e7ce]"
             style={{
               fontFamily: "Public Sans, sans-serif",
               fontSize: "clamp(24px, 3vw, 40px)",
