@@ -8,7 +8,7 @@
       "strict": true,
       "skipLibCheck": true,
       "noEmit": true,
-      "types": ["vite/client"],
+      "types": ["node"],
       "forceConsistentCasingInFileNames": true
     },
     "include": ["src"]
