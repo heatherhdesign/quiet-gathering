@@ -15,7 +15,7 @@ export function ExitScreen({ onBackToHome }: ExitScreenProps) {
       className="relative size-full overflow-hidden"
     >
       {/* Background */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 bg-[#2e1a1d]">
         <ImageWithFallback
           src={imgBackground}
           alt=""

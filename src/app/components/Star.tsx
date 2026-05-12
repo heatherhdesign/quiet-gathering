@@ -8,9 +8,10 @@ interface StarProps {
   brightness: number;
   color: string;
   onClick?: () => void;
+  showExampleLabel?: boolean;
 }
 
-export function Star({ x, y, size, brightness, color, onClick }: StarProps) {
+export function Star({ x, y, size, brightness, color, onClick, showExampleLabel = false }: StarProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   const baseOpacity = brightness * 0.7;
@@ -52,6 +53,8 @@ export function Star({ x, y, size, brightness, color, onClick }: StarProps) {
         left: `${x}%`,
         top: `${y}%`,
         cursor: onClick ? "pointer" : "default",
+        padding: "20px",
+        margin: "-20px",
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -101,6 +104,22 @@ export function Star({ x, y, size, brightness, color, onClick }: StarProps) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
+          className="absolute top-full mt-4 left-1/2 -translate-x-1/2 whitespace-nowrap text-[#f7e7ce] text-sm pointer-events-none"
+          style={{
+            fontFamily: "Public Sans, sans-serif",
+          }}
+        >
+          A quiet presence
+        </motion.div>
+      )}
+
+      {/* Example label (auto-shown once) */}
+      {showExampleLabel && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 0.8, y: 0 }}
+          exit={{ opacity: 0, y: -5 }}
+          transition={{ duration: 1, ease: "easeOut" }}
           className="absolute top-full mt-4 left-1/2 -translate-x-1/2 whitespace-nowrap text-[#f7e7ce] text-sm pointer-events-none"
           style={{
             fontFamily: "Public Sans, sans-serif",

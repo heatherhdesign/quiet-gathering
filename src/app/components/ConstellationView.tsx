@@ -43,6 +43,7 @@ export function ConstellationView({
   const [isCloserView, setIsCloserView] = useState(false);
   const [currentAffirmation, setCurrentAffirmation] = useState<string | null>(null);
   const [hasShownAffirmation, setHasShownAffirmation] = useState(false);
+  const [showExampleLabel, setShowExampleLabel] = useState(false);
 
   useEffect(() => {
     // Color palette from darkest to brightest for atmospheric depth
@@ -96,7 +97,18 @@ export function ConstellationView({
       setShowHint(false);
     }, 8000);
 
-    return () => clearTimeout(timer);
+    // Show example label after 1.5 seconds, then hide after 3 seconds
+    const exampleLabelTimer = setTimeout(() => {
+      setShowExampleLabel(true);
+      setTimeout(() => {
+        setShowExampleLabel(false);
+      }, 3000);
+    }, 1500);
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(exampleLabelTimer);
+    };
   }, []);
 
   // Affirmation timer - shows one random message after 5 minutes, only once per session
@@ -127,7 +139,7 @@ export function ConstellationView({
       className="relative size-full overflow-hidden"
     >
       {/* Background */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 bg-[#2e1a1d]">
         <ImageWithFallback
           src={imgBackground}
           alt=""
@@ -145,17 +157,25 @@ export function ConstellationView({
       >
         {stars
           .filter((_, index) => !isCloserView || index % 2 === 0)
-          .map((star) => (
-            <Star
-              key={star.id}
-              x={star.x}
-              y={star.y}
-              size={star.size}
-              brightness={star.brightness}
-              color={star.color}
-              onClick={() => setShowPresenceOverlay(true)}
-            />
-          ))}
+          .map((star) => {
+            // Find first star in the upper-middle area for the example label
+            const isInUpperMiddle = star.y >= 25 && star.y <= 45 && star.x >= 35 && star.x <= 65;
+            const exampleStar = stars.find(s => s.y >= 25 && s.y <= 45 && s.x >= 35 && s.x <= 65);
+            const showLabel = exampleStar?.id === star.id && showExampleLabel;
+
+            return (
+              <Star
+                key={star.id}
+                x={star.x}
+                y={star.y}
+                size={star.size}
+                brightness={star.brightness}
+                color={star.color}
+                onClick={() => setShowPresenceOverlay(true)}
+                showExampleLabel={showLabel}
+              />
+            );
+          })}
       </motion.div>
 
       {/* User's star (only if visible) */}
@@ -258,7 +278,7 @@ export function ConstellationView({
                 fontSize: "clamp(16px, 3vw, 32px)",
               }}
             >
-              Hover near stars to notice their light
+              Move gently near a star to notice its light
             </motion.p>
           </motion.div>
         )}
