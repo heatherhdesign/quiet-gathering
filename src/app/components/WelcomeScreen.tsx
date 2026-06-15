@@ -1,6 +1,4 @@
 import { motion } from "motion/react";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
-import imgBackground from "../../imports/MacBookPro161/dfa5f8da6f5f9c8ad9fa8ff338272c56fea12ec5.png";
 
 interface WelcomeScreenProps {
   onEnter: () => void;
@@ -16,15 +14,6 @@ export function WelcomeScreen({ onEnter, onLearnMore }: WelcomeScreenProps) {
       transition={{ duration: 1.2, ease: "easeOut" }}
       className="relative size-full overflow-hidden"
     >
-      {/* Background */}
-      <div className="absolute inset-0 bg-[#2e1a1d]">
-        <ImageWithFallback
-          src={imgBackground}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-      </div>
-
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-between size-full px-8 py-20">
         <div className="flex-1" />
