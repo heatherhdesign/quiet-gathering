@@ -1,6 +1,4 @@
 import { motion } from "motion/react";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
-import imgBackground from "../../imports/MacBookPro169/74ab02cc8af099874d86d4822223316b07b0658d.png";
 
 interface ExitScreenProps {
   onBackToHome: () => void;
@@ -14,14 +12,7 @@ export function ExitScreen({ onBackToHome }: ExitScreenProps) {
       transition={{ duration: 2, ease: "easeOut" }}
       className="relative size-full overflow-hidden"
     >
-      {/* Background */}
-      <div className="absolute inset-0 bg-[#2e1a1d]">
-        <ImageWithFallback
-          src={imgBackground}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-      </div>
+      {/* No Background */}
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-center size-full px-8">

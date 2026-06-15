@@ -2,9 +2,6 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Star } from "./Star";
 import { PresenceOverlay } from "./PresenceOverlay";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
-import imgBackground from "../../imports/MacBookPro165/74ab02cc8af099874d86d4822223316b07b0658d.png";
-import imgExit from "../../imports/MacBookPro165/aef579dd32303b01ce098ab84d0937d8eb439326.png";
 
 interface ConstellationViewProps {
   isUserVisible: boolean;
@@ -138,14 +135,7 @@ export function ConstellationView({
       transition={{ duration: 1.5, ease: "easeOut" }}
       className="relative size-full overflow-hidden"
     >
-      {/* Background */}
-      <div className="absolute inset-0 bg-[#2e1a1d]">
-        <ImageWithFallback
-          src={imgBackground}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-      </div>
+      {/* ✅ NO background here */}
 
       {/* Stars */}
       <motion.div
@@ -341,12 +331,12 @@ export function ConstellationView({
               )}
             </AnimatePresence>
 
-            <button
+           <button
               onClick={onLeave}
-              className="text-[#f7e7ce] opacity-60 hover:opacity-100 transition-all duration-300"
               aria-label="Leave Constellation"
+              className="text-[#f7e7ce] opacity-60 hover:opacity-100 transition-all duration-300"
             >
-              <ImageWithFallback src={imgExit} alt="" className="w-[20px] h-[26px]" />
+              Leave
             </button>
           </div>
 
@@ -411,16 +401,16 @@ export function ConstellationView({
           </AnimatePresence>
 
           <button
-            onClick={onLeave}
-            className="flex items-center gap-2 text-[#f7e7ce] opacity-60 hover:opacity-100 transition-all duration-300"
-            style={{
-              fontFamily: "Public Sans, sans-serif",
-              fontSize: "16px",
-            }}
-          >
-            Leave Constellation
-            <ImageWithFallback src={imgExit} alt="" className="w-[20px] h-[26px]" />
-          </button>
+  onClick={onLeave}
+  className="flex items-center gap-2 text-[#f7e7ce] opacity-60 hover:opacity-100 transition-all duration-300"
+  style={{
+    fontFamily: "Public Sans, sans-serif",
+    fontSize: "16px",
+  }}
+>
+  Leave Constellation
+  <span className="text-lg">←</span>
+</button>
         </div>
       </motion.div>
 

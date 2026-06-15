@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { motion } from "motion/react";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
-import imgBackground from "../../imports/MacBookPro162-1/dfa5f8da6f5f9c8ad9fa8ff338272c56fea12ec5.png";
 
 interface EntryScreenProps {
   onEnter: (isVisible: boolean) => void;
@@ -18,14 +16,8 @@ export function EntryScreen({ onEnter }: EntryScreenProps) {
       transition={{ duration: 1, ease: "easeOut" }}
       className="relative size-full overflow-hidden"
     >
-      {/* Background */}
-      <div className="absolute inset-0 bg-[#2e1a1d]">
-        <ImageWithFallback
-          src={imgBackground}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-      </div>
+      
+{/* ✅ No background layer anymore */}
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-center size-full px-8">
@@ -76,19 +68,27 @@ export function EntryScreen({ onEnter }: EntryScreenProps) {
           transition={{ duration: 0.8, delay: 0.7, ease: "easeOut" }}
           className="flex flex-col items-center justify-center gap-3"
         >
-          <button
-            onClick={() => setIsVisible(!isVisible)}
-            className="relative w-[56px] h-[30px] rounded-[15px] transition-all duration-300 hover:shadow-[0_0_20px_rgba(110,63,68,0.4)] flex-shrink-0"
-            style={{
-              backgroundColor: isVisible ? "#C6A4A4" : "#6e3f44",
-            }}
-          >
+        <button
+  onClick={() => setIsVisible(!isVisible)}
+  aria-label={
+    isVisible
+      ? "Stop appearing to others in the sky"
+      : "Appear to others in the sky"
+  }
+  className="relative w-[56px] h-[30px] rounded-full transition-all duration-300 flex-shrink-0"
+  style={{
+    backgroundColor: isVisible ? "#f7e7ce" : "rgba(70,40,42,0.6)",
+    boxShadow: isVisible
+      ? "0 0 10px rgba(247,231,206,0.35)"
+      : "none",
+  }}
+>
             <motion.div
               animate={{
-                x: isVisible ? 16 : 0,
+                x: isVisible ? 26 : 0,
               }}
               transition={{ type: "spring", stiffness: 500, damping: 30 }}
-              className="absolute left-0 top-0 bg-[#f7e7ce] w-[40px] h-[30px] rounded-[15px] shadow-lg"
+              className="absolute top-[3px] left-[3px] w-[24px] h-[24px] rounded-full bg-[#f7e7ce] shadow-md"
             />
           </button>
           <p

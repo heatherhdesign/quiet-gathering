@@ -1,8 +1,5 @@
 import { useEffect } from "react";
 import { motion } from "motion/react";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
-import imgBackground from "../../imports/MacBookPro164-1/744304efce34358975b6a2838dc4c5ff6485daa4.png";
-
 interface StarPlacementScreenProps {
   onContinue: () => void;
 }
@@ -24,15 +21,8 @@ export function StarPlacementScreen({ onContinue }: StarPlacementScreenProps) {
       transition={{ duration: 1.2, ease: "easeOut" }}
       className="relative size-full overflow-hidden"
     >
-      {/* Background */}
-      <div className="absolute inset-0 bg-[#2e1a1d]">
-        <ImageWithFallback
-          src={imgBackground}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-      </div>
-
+      {/* ✅ NO background here */}
+      
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-center size-full px-8">
         {/* User's star */}
