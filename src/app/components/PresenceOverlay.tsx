@@ -2,13 +2,20 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
 interface PresenceOverlayProps {
+  presenceId: string;
   onClose: () => void;
+  onSendQuietAcknowledgement: (presenceId: string) => Promise<void>;
 }
 
-export function PresenceOverlay({ onClose }: PresenceOverlayProps) {
+export function PresenceOverlay({
+  presenceId,
+  onClose,
+  onSendQuietAcknowledgement,
+}: PresenceOverlayProps) {
   const [stage, setStage] = useState<"acknowledge" | "received">("acknowledge");
 
-  const handleAcknowledge = () => {
+  const handleAcknowledge = async () => {
+    await onSendQuietAcknowledgement(presenceId);
     setStage("received");
   };
 

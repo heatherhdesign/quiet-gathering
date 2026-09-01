@@ -178,4 +178,46 @@
     font-weight: var(--font-weight-normal);
     line-height: 1.5;
   }
+  /* Quiet Gathering background states */
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* Default Quiet Gathering entry background */
+body {
+  background:
+    radial-gradient(circle at 50% 30%, rgba(247, 197, 173, 0.16), transparent 34%),
+    radial-gradient(circle at 20% 80%, rgba(183, 110, 121, 0.2), transparent 32%),
+    linear-gradient(180deg, #2b1b31 0%, #1a1429 46%, #0e1020 100%);
+}
+
+/* Sky state after entering */
+body.sky-entered {
+  background:
+    radial-gradient(circle at 50% 35%, rgba(247, 197, 173, 0.12), transparent 28%),
+    radial-gradient(circle at 18% 72%, rgba(183, 110, 121, 0.18), transparent 34%),
+    radial-gradient(circle at 82% 24%, rgba(198, 164, 164, 0.12), transparent 30%),
+    linear-gradient(180deg, #15162c 0%, #101226 42%, #090b18 100%);
+  background-attachment: fixed;
+}
+
+/* Keep the app transparent so the body background can show through */
+#root {
+  background: transparent;
+}
+
+.qg-constellation-screen {
+  min-height: 100vh;
+  background: transparent;
+}
 }

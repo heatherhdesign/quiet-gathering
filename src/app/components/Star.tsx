@@ -9,13 +9,26 @@ interface StarProps {
   color: string;
   onClick?: () => void;
   showExampleLabel?: boolean;
+  showPresenceLabel?: boolean;
+  isAcknowledged?: boolean;
 }
 
-export function Star({ x, y, size, brightness, color, onClick, showExampleLabel = false }: StarProps) {
+export function Star({
+  x,
+  y,
+  size,
+  brightness,
+  color,
+  onClick,
+  showExampleLabel = false,
+  showPresenceLabel = false,
+  isAcknowledged = false,
+}: StarProps) {
+  
   const [isHovered, setIsHovered] = useState(false);
 
   const baseOpacity = brightness * 0.7;
-  const glowSize = size * 10;
+  const glowSize = showPresenceLabel ? size * 4.5 : size * 10;
 
   // Convert hex to rgb for gradient
   const hexToRgb = (hex: string) => {
@@ -31,23 +44,30 @@ export function Star({ x, y, size, brightness, color, onClick, showExampleLabel 
 
   const rgb = hexToRgb(color);
 
+  const starPointBoxShadow = isAcknowledged
+  ? `0 0 ${size * 8}px rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 1), 0 0 ${size * 16}px rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.55)`
+  : showPresenceLabel
+    ? `0 0 ${size * 6}px rgba(247, 231, 206, 0.95), 0 0 ${size * 12}px rgba(247, 197, 173, 0.55), 0 0 ${size * 20}px rgba(247, 231, 206, 0.75)`
+    : isHovered
+      ? `0 0 ${size * 3}px rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.85)`
+      : `0 0 ${size * 2.2}px rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.65)`;
+
+  const starPointFilter = showPresenceLabel
+  ? `drop-shadow(0 0 ${size * 1.8}px rgba(247, 231, 206, 0.95)) drop-shadow(0 0 ${size * 3.6}px rgba(247, 197, 173, 0.55))`
+  : "none";
+
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0 }}
-      animate={{
-        opacity: [baseOpacity * 0.7, baseOpacity, baseOpacity * 0.7],
-        scale: 1
-      }}
-      transition={{
-        duration: 2,
-        delay: Math.random() * 2,
-        ease: "easeOut",
-        opacity: {
-          duration: 3,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }
-      }}
+  <motion.div
+    initial={{ opacity: 0, scale: 0.8 }}
+    animate={{
+      opacity: 1,
+      scale: 1,
+    }}
+    transition={{
+      duration: 1.2,
+      delay: Math.random() * 1.5,
+      ease: "easeOut",
+    }}
       style={{
         position: "absolute",
         left: `${x}%`,
@@ -61,44 +81,69 @@ export function Star({ x, y, size, brightness, color, onClick, showExampleLabel 
       onClick={onClick}
     >
       {/* Glow */}
-      <motion.div
-        animate={{
-          opacity: isHovered ? 0.5 : 0.2,
-          scale: isHovered ? 1.5 : 1,
-        }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        <motion.div
+          animate={{
+            opacity: isAcknowledged
+              ? [0.28, 0.75, 0.45, 0.28]
+              : isHovered
+                ? 0.45
+                : 0.28,
+            scale: isAcknowledged
+              ? [1, 2.4, 1.7, 1]
+              : isHovered
+                ? 1.5
+                : 1,
+          }}
+          transition={
+            isAcknowledged
+              ? { duration: 2.2, ease: "easeInOut" }
+              : { duration: 0.6, ease: "easeOut" }
+          }
+          style={{
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%, -50%)",
+            width: showPresenceLabel ? `${size * 8}px` : `${glowSize}px`,
+            height: showPresenceLabel ? `${size * 8}px` : `${glowSize}px`,
+            background: showPresenceLabel
+              ? "transparent"
+              : `radial-gradient(circle, rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.6) 0%, rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0) 70%)`,
+          }}
+        />
+
+      {/* Star point */}
+        <motion.div
+          animate={{
+            scale: isAcknowledged
+              ? [1, 2.5, 1.6, 1]
+              : isHovered
+                ? 1.3
+                : 1,
+          }}
+          transition={
+            isAcknowledged
+              ? { duration: 2.2, ease: "easeInOut" }
+              : { duration: 0.4, ease: "easeOut" }
+          }
+
         style={{
           position: "absolute",
           left: "50%",
           top: "50%",
           transform: "translate(-50%, -50%)",
-          width: `${glowSize}px`,
-          height: `${glowSize}px`,
-          background: `radial-gradient(circle, rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.6) 0%, rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0) 70%)`,
-          pointerEvents: "none",
-        }}
-      />
-
-      {/* Star point */}
-      <motion.div
-        animate={{
-          scale: isHovered ? 1.3 : 1,
-          opacity: isHovered ? 1 : baseOpacity,
-        }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
-        style={{
           width: `${size}px`,
           height: `${size}px`,
-          background: color,
+          backgroundColor: color,
           borderRadius: "50%",
-          boxShadow: isHovered
-            ? `0 0 ${size * 3}px rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.8)`
-            : "none",
+          opacity: isAcknowledged ? 1 : 0.95,
+          boxShadow: starPointBoxShadow,
+          filter: starPointFilter,
         }}
-      />
+        />
 
-      {/* Hover tooltip */}
-      {isHovered && (
+            {/* Hover tooltip */}
+      {isHovered && showPresenceLabel && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}

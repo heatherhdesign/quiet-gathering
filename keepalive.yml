@@ -1,0 +1,14 @@
+name: Keep Supabase Active
+
+on:
+  schedule:
+    - cron: '0 12 */3 * *'   # Every 3 days
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Visit Quiet Gathering
+        run: |
+          curl -L https://still-light.org/gathering.html

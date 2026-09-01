@@ -12,10 +12,8 @@ export function ExitScreen({ onBackToHome }: ExitScreenProps) {
       transition={{ duration: 2, ease: "easeOut" }}
       className="relative size-full overflow-hidden"
     >
-      {/* No Background */}
-
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center size-full px-8">
+      <div className="qg-exit-content relative z-10 flex flex-col items-center justify-center size-full px-8 pt-20 pb-16">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -51,7 +49,7 @@ export function ExitScreen({ onBackToHome }: ExitScreenProps) {
           whileHover={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.5, ease: "easeOut" }}
           onClick={onBackToHome}
-          className="text-[#f7e7ce] px-8 py-3 lg:px-12 lg:py-4 rounded-full border-2 border-[#f7e7ce] hover:bg-[#f7e7ce] hover:text-[#2e1a1d] transition-all duration-300"
+          className="self-center text-[#f7e7ce] px-8 py-3 lg:px-12 lg:py-4 rounded-full border-2 border-[#f7e7ce] hover:bg-[#f7e7ce] hover:text-[#2e1a1d] transition-all duration-300"
           style={{
             fontFamily: "Public Sans, sans-serif",
             fontSize: "clamp(16px, 2.5vw, 24px)",
