@@ -26,8 +26,11 @@ jobs:
           echo "import { chromium } from 'playwright';" > test.mjs
           echo "const browser = await chromium.launch({ headless: true });" >> test.mjs
           echo "const page = await browser.newPage();" >> test.mjs
-          echo "await page.goto('https://still-light.org');" >> test.mjs
-          echo "console.log(await page.title());" >> test.mjs
+          echo "await page.goto('https://still-light.org/gathering.html');" >> test.mjs
+          echo "await page.waitForTimeout(3000);" >> test.mjs
+          echo "await page.getByRole('button', { name: /step inside/i }).click();" >> test.mjs
+          echo "console.log('Clicked Step Inside');" >> test.mjs
+          echo "await page.waitForTimeout(3000);" >> test.mjs
           echo "await browser.close();" >> test.mjs
 
       - name: Run Test
